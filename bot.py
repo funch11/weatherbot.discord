@@ -3,7 +3,6 @@ from discord.ext import commands
 from pyowm import OWM
 from pyowm.utils.config import get_default_config
 
-api = "ODIwNTc5MjMwMTIzMDMyNTc2.YE3N9g.HChUBr4u2KeVlT32bqea4yutRBY"
 client = commands.Bot(command_prefix='*')
 
  
