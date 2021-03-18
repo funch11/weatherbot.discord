@@ -58,6 +58,8 @@ async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
 
 token = os.environ.get("BOT_TOKEN")
 
+client.run(str(token))
+
 
 
 
