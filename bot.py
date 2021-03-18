@@ -3,11 +3,11 @@ from discord.ext import commands
 from pyowm import OWM
 from pyowm.utils.config import get_default_config
 
-
+api = "ODIwNTc5MjMwMTIzMDMyNTc2.YE3N9g.HChUBr4u2KeVlT32bqea4yutRBY"
 client = commands.Bot(command_prefix='*')
 
  
-owm = OWM("uwui")
+owm = OWM("98de26f79803d03f20d5d1f769e26af8")
 mgr = owm.weather_manager()
 
 @client.event
