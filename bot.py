@@ -1,7 +1,6 @@
 import discord 
 from discord.ext import commands
 from pyowm import OWM
-from pyowm.utils.config import get_default_config
 #import os
 
 client = commands.Bot(command_prefix='*')
