@@ -2,8 +2,8 @@ import discord
 from discord.ext import commands
 from pyowm import OWM
 from pyowm.utils.config import get_default_config
+import os
 
-api = "ODIwNTc5MjMwMTIzMDMyNTc2.YE3N9g.HChUBr4u2KeVlT32bqea4yutRBY"
 client = commands.Bot(command_prefix='*')
 
  
@@ -56,7 +56,7 @@ async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
         emd = discord.Embed(title=" :x:  City not found", description = f"**Requseted by {ctx.author.mention}**")
         await ctx.send(embed = emd)
 
-client.run(api)
+token = os.environ.get("BOT_TOKEN")
 
 
 
