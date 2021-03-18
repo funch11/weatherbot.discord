@@ -55,9 +55,9 @@ async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
         emd = discord.Embed(title=" :x:  City not found", description = f"**Requseted by {ctx.author.mention}**")
         await ctx.send(embed = emd)
 
-#token = os.environ.get("BOT_TOKEN")
+token = os.environ.get("BOT_TOKEN")
 
-client.run("ODIwNTc5MjMwMTIzMDMyNTc2.YE3N9g.HChUBr4u2KeVlT32bqea4yutRBY")
+client.run(str(token))
 
 
 
