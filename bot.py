@@ -1,7 +1,7 @@
 import discord 
 from discord.ext import commands
 from pyowm import OWM
-#import os
+import os
 
 client = commands.Bot(command_prefix='*')
 
