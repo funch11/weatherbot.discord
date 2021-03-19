@@ -5,7 +5,7 @@ from pyowm import OWM
 client = commands.Bot(command_prefix='*')
 
  
-owm = OWM("98de26f79803d03f20d5d1f769e26af8")
+owm = OWM("owm key")
 mgr = owm.weather_manager()
 
 @client.event
@@ -56,7 +56,7 @@ async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
 
 
 
-client.run("ODIwNTc5MjMwMTIzMDMyNTc2.YE3N9g.HChUBr4u2KeVlT32bqea4yutRBY")
+client.run("discord key")
 
 
 
