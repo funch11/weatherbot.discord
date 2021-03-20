@@ -1,11 +1,13 @@
 import discord 
 from discord.ext import commands
 from pyowm import OWM
+import keep_alive
+import os
 
 client = commands.Bot(command_prefix='*')
 
  
-owm = OWM("owm key")
+owm = OWM("98de26f79803d03f20d5d1f769e26af8")
 mgr = owm.weather_manager()
 
 @client.event
@@ -51,12 +53,14 @@ async def w(ctx,*,city):
 @w.error
 async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
     if isinstance(error,commands.CommandInvokeError):
-        emd = discord.Embed(title=" :x:  City not found", description = f"**Requseted by {ctx.author.mention}**")
+        emd = discord.Embed(title="City not found  :mag:", description = f"**Requseted by {ctx.author.mention}**")
         await ctx.send(embed = emd)
 
+keep_alive.keep_alive()
+token = os.environ.get("Token")
+                       
 
 
-client.run("discord key")
 
 
 
