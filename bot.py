@@ -1,13 +1,11 @@
 import discord 
 from discord.ext import commands
 from pyowm import OWM
-import keep_alive
-import os
 
 client = commands.Bot(command_prefix='*')
 
  
-owm = OWM("98de26f79803d03f20d5d1f769e26af8")
+owm = OWM("owm_key")
 mgr = owm.weather_manager()
 
 @client.event
@@ -56,8 +54,7 @@ async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
         emd = discord.Embed(title="City not found  :mag:", description = f"**Requseted by {ctx.author.mention}**")
         await ctx.send(embed = emd)
 
-keep_alive.keep_alive()
-token = os.environ.get("Token")
+client.run("discord_token")
                        
 
 
