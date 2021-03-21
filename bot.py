@@ -5,7 +5,7 @@ from pyowm import OWM
 client = commands.Bot(command_prefix='*')
 
  
-owm = OWM("owm_key")
+owm = OWM("98de26f79803d03f20d5d1f769e26af8")
 mgr = owm.weather_manager()
 
 @client.event
@@ -48,13 +48,18 @@ async def w(ctx,*,city):
     emb.set_footer(text="Created by getxay  •  OWM api")
     await ctx.send(embed = emb)
 
+@client.command()
+async def wstats(ctx):
+    await ctx.send(f"Connected on {str(len(client.guilds))} servers:")
+
+
 @w.error
 async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
     if isinstance(error,commands.CommandInvokeError):
         emd = discord.Embed(title="City not found  :mag:", description = f"**Requseted by {ctx.author.mention}**")
         await ctx.send(embed = emd)
 
-client.run("discord_token")
+client.run("ODIzMDA2Njg2MzY4MzY2NjEy.YFaitA.mmdk66uZa9PyMMupqUvcflZycpU")
                        
 
 
