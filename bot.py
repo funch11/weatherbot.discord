@@ -1,20 +1,32 @@
 import discord 
 from discord.ext import commands
 from pyowm import OWM
+from pyowm.utils.config import get_default_config
+import asyncio
+import keep_alive
 
 client = commands.Bot(command_prefix='*')
 
+config_dict = get_default_config()
+config_dict['language'] = 'ru'
  
-owm = OWM("98de26f79803d03f20d5d1f769e26af8")
+owm = OWM("98de26f79803d03f20d5d1f769e26af8", config_dict)
 mgr = owm.weather_manager()
+
+async def status_task():
+    while True:
+        await client.change_presence(activity=discord.Game(name='*погода <город>'))
+        await asyncio.sleep(10)
+        await client.change_presence(activity=discord.Game(name=f"Пинг {round(client.latency * 1000)} мс"))
+        await asyncio.sleep(10)
 
 @client.event
 async def on_ready():
-    await client.change_presence(activity=discord.Game(name='*w <city>'))
-    print("Bot started!")
-    
+    client.loop.create_task(status_task())
+    print("Бот запущен!")
+
 @client.command()
-async def w(ctx,*,city):
+async def погода(ctx,*,city):
     observation = mgr.weather_at_place(city)
     w = observation.weather
     l = observation.location
@@ -32,34 +44,31 @@ async def w(ctx,*,city):
     pr = w.pressure['press'] 
     vd = w.visibility_distance 
 
-    emb = discord.Embed(title="Weather  :white_sun_rain_cloud:", description = f"**Requseted by {ctx.author.mention}**",color=0x00FFFF)
-    emb.add_field(name="City:", value=f"_{c}_",inline=False)
-    emb.add_field(name="Country:", value=f"_{s}_",inline=False)
-    emb.add_field(name="Temperature:", value=f"_{t}°C_",inline=False)
-    emb.add_field(name="Minimal:", value=f"_{h}°C_",inline=False)
-    emb.add_field(name="Maximum:", value=f"_{k}°C_",inline=False)
-    emb.add_field(name="Feels like:", value=f"_{f}°C_",inline=False)
-    emb.add_field(name="Status:", value=f"_{st}_",inline=False)
-    emb.add_field(name="Wind speed:", value=f"_{wi} m/s_",inline=False)
-    emb.add_field(name="Humidity:", value=f"_{humi}%_",inline=False)
-    emb.add_field(name="Cloudy:", value=f"_{cl}%_",inline=False)
-    emb.add_field(name="Pressure:", value=f"_{pr} mmHg_",inline=False)
-    emb.add_field(name="Visibility:", value=f"_{vd} m_",inline=False)
-    emb.set_footer(text="Created by getxay  •  OWM api")
+    emb = discord.Embed(title="Погода  :white_sun_rain_cloud:", description = f"**Запрошенный {ctx.author.mention}**",color=0x00FFFF)
+    emb.add_field(name="Город:", value=f"_{c}_",inline=False)
+    emb.add_field(name="Регион:", value=f"_{s}_",inline=False)
+    emb.add_field(name="Температура:", value=f"_{t}°C_",inline=False)
+    emb.add_field(name="Минимальная:", value=f"_{h}°C_",inline=False)
+    emb.add_field(name="Максимальная:", value=f"_{k}°C_",inline=False)
+    emb.add_field(name="Ощущается как:", value=f"_{f}°C_",inline=False)
+    emb.add_field(name="Статус:", value=f"_{st}_",inline=False)
+    emb.add_field(name="Скорость ветра:", value=f"_{wi} м/с_",inline=False)
+    emb.add_field(name="Влажность:", value=f"_{humi}%_",inline=False)
+    emb.add_field(name="Облачность:", value=f"_{cl}%_",inline=False)
+    emb.add_field(name="Давление:", value=f"_{pr} мм.рт.ст_",inline=False)
+    emb.add_field(name="Видимость:", value=f"_{vd} м_",inline=False)
+    emb.set_footer(text="Разработчик getxay#3896  •  Источник OWM")
     await ctx.send(embed = emb)
 
-@client.command()
-async def wstats(ctx):
-    await ctx.send(f"Connected on {str(len(client.guilds))} servers:")
 
-
-@w.error
+@погода.error
 async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
     if isinstance(error,commands.CommandInvokeError):
-        emd = discord.Embed(title="City not found  :mag:", description = f"**Requseted by {ctx.author.mention}**")
+        emd = discord.Embed(title="Город не найден  :mag:", description = f"**Запрошенный {ctx.author.mention}**")
         await ctx.send(embed = emd)
 
-client.run("ODIzMDA2Njg2MzY4MzY2NjEy.YFaitA.mmdk66uZa9PyMMupqUvcflZycpU")
+keep_alive.keep_alive()
+client.run("ODIwNTc5MjMwMTIzMDMyNTc2.YE3N9g.HChUBr4u2KeVlT32bqea4yutRBY")
                        
 
 
