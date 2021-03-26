@@ -1,16 +1,11 @@
 import discord 
 from discord.ext import commands
 from pyowm import OWM
-from pyowm.utils.config import get_default_config
 import asyncio
-import keep_alive
 
 client = commands.Bot(command_prefix='*')
-
-config_dict = get_default_config()
-config_dict['language'] = 'ru'
  
-owm = OWM("98de26f79803d03f20d5d1f769e26af8", config_dict)
+owm = OWM("owmkey")
 mgr = owm.weather_manager()
 
 async def status_task():
@@ -51,13 +46,13 @@ async def погода(ctx,*,city):
     emb.add_field(name="Минимальная:", value=f"_{h}°C_",inline=False)
     emb.add_field(name="Максимальная:", value=f"_{k}°C_",inline=False)
     emb.add_field(name="Ощущается как:", value=f"_{f}°C_",inline=False)
-    emb.add_field(name="Статус:", value=f"_{st}_",inline=False)
+    emb.add_field(name="Статус:", value=f"_{st}_", inline=False)
     emb.add_field(name="Скорость ветра:", value=f"_{wi} м/с_",inline=False)
     emb.add_field(name="Влажность:", value=f"_{humi}%_",inline=False)
     emb.add_field(name="Облачность:", value=f"_{cl}%_",inline=False)
     emb.add_field(name="Давление:", value=f"_{pr} мм.рт.ст_",inline=False)
     emb.add_field(name="Видимость:", value=f"_{vd} м_",inline=False)
-    emb.set_footer(text="Разработчик getxay#3896  •  Источник OWM")
+    emb.set_footer(text="Разработчик Little4Win  •  discord.py")
     await ctx.send(embed = emb)
 
 
@@ -67,8 +62,7 @@ async def w_error(ctx: commands.Context, error:commands.CommandInvokeError):
         emd = discord.Embed(title="Город не найден  :mag:", description = f"**Запрошенный {ctx.author.mention}**")
         await ctx.send(embed = emd)
 
-keep_alive.keep_alive()
-client.run("ODIwNTc5MjMwMTIzMDMyNTc2.YE3N9g.HChUBr4u2KeVlT32bqea4yutRBY")
+client.run("dskey")
                        
 
 
